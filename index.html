@@ -118,10 +118,17 @@
                         <circle cx="253" cy="253" r="245" stroke="#00ff99" stroke-width="6" stroke-linecap="round" stroke-dasharray="30 40"></circle>
                     </svg>
                 </div>
-                <!-- Inner Solid Purple Circle & Avatar Image -->
+                <!-- Inner Solid Purple Circle & Avatar Images (crossfade stack) -->
                 <div class="relative w-[280px] h-[280px] md:w-[350px] md:h-[350px] bg-[#9375e6] rounded-full flex items-center justify-center shadow-[0_0_60px_rgba(138,114,232,0.3)]">
-                    <img id="hero-avatar" src="img/avatar_calm.jpg" alt="Avatar" class="w-[95%] h-[95%] object-cover rounded-full z-10 transition-all duration-500">
-                    
+                    <!-- Layer A (visible first) -->
+                    <img id="avatar-a" src="img/avatar_calm.jpg" alt="Avatar"
+                         class="absolute w-[95%] h-[95%] object-cover rounded-full z-10"
+                         style="transition:opacity 0.35s ease; opacity:1;">
+                    <!-- Layer B (hidden, preloaded) -->
+                    <img id="avatar-b" src="img/avatar_focus.jpg" alt="Avatar"
+                         class="absolute w-[95%] h-[95%] object-cover rounded-full z-10"
+                         style="transition:opacity 0.35s ease; opacity:0;">
+
                     <!-- CLICK ME Button -->
                     <button id="avatar-click-btn" class="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 bg-[#1a1b26]/90 backdrop-blur-md border border-white/20 text-white/90 text-[10px] md:text-[11px] font-bold px-4 py-2 rounded-full z-20 hover:scale-105 hover:bg-[#252636] transition-all flex items-center gap-2 font-['JetBrains_Mono'] shadow-xl">
                         CLICK ME 👀
@@ -697,36 +704,50 @@
 
     <script src="script.js"></script>
     <script>
-        // Hero Avatar Interactive Flow — each click swaps the image + caption
-        const avatarImg = document.getElementById('hero-avatar');
-        const clickBtn  = document.getElementById('avatar-click-btn');
-
+        // ── Avatar crossfade with preloading ──────────────────────────────────
         const avatarStates = [
-            { text: 'CLICK ME 👀',          src: 'img/avatar_calm.jpg'  },
-            { text: 'TRUST ME ✨',           src: 'img/avatar_focus.jpg' },
-            { text: 'ONE MORE 🌟',           src: 'img/avatar_chaos.jpg' },
-            { text: 'LAST ONE FR 😅',        src: 'img/avatar_tired.jpg' },
-            { text: "GLAD YOU'RE HERE 🥰",  src: 'img/avatar_happy.jpg' },
+            { text: 'CLICK ME \uD83D\uDC40',         src: 'img/avatar_calm.jpg'  },
+            { text: 'TRUST ME \u2728',          src: 'img/avatar_focus.jpg' },
+            { text: 'ONE MORE \uD83C\uDF1F',          src: 'img/avatar_chaos.jpg' },
+            { text: 'LAST ONE FR \uD83D\uDE05',       src: 'img/avatar_tired.jpg' },
+            { text: "GLAD YOU'RE HERE \uD83E\uDD70", src: 'img/avatar_happy.jpg' },
         ];
 
-        let currentState = 0;
+        // Preload every image into browser memory immediately
+        const preloaded = avatarStates.map(s => {
+            const img = new Image();
+            img.src = s.src;
+            return img;
+        });
 
-        if (clickBtn && avatarImg) {
+        const layerA   = document.getElementById('avatar-a');
+        const layerB   = document.getElementById('avatar-b');
+        const clickBtn = document.getElementById('avatar-click-btn');
+
+        let current    = 0;   // index of the state currently visible
+        let activeLayer = 'a'; // which layer is on top
+
+        if (clickBtn && layerA && layerB) {
             clickBtn.addEventListener('click', () => {
-                currentState = (currentState + 1) % avatarStates.length;
-                const state = avatarStates[currentState];
+                current = (current + 1) % avatarStates.length;
+                const state = avatarStates[current];
 
-                // Fade out
-                avatarImg.style.opacity = '0';
-                avatarImg.style.transform = 'scale(0.92)';
+                // Update the HIDDEN layer with the next image (already cached)
+                if (activeLayer === 'a') {
+                    // B is hidden — set its src then crossfade A→B
+                    layerB.src = state.src;
+                    layerB.style.opacity = '1';
+                    layerA.style.opacity = '0';
+                    activeLayer = 'b';
+                } else {
+                    // A is hidden — set its src then crossfade B→A
+                    layerA.src = state.src;
+                    layerA.style.opacity = '1';
+                    layerB.style.opacity = '0';
+                    activeLayer = 'a';
+                }
 
-                setTimeout(() => {
-                    avatarImg.src = state.src;
-                    clickBtn.textContent = state.text;
-                    // Fade back in
-                    avatarImg.style.opacity = '1';
-                    avatarImg.style.transform = 'scale(1)';
-                }, 250);
+                clickBtn.textContent = state.text;
             });
         }
     </script>
