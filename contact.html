@@ -120,6 +120,7 @@
                             <input
                                 type="text"
                                 id="name"
+                                name="name"
                                 placeholder="Your secret identity"
                                 required
                                 class="form-input w-full h-10 rounded-md px-3 py-2 text-sm text-white placeholder-white/30 font-['JetBrains_Mono'] transition-all duration-300"
@@ -134,6 +135,7 @@
                             <input
                                 type="email"
                                 id="email"
+                                name="email"
                                 placeholder="I promise I won't spam you"
                                 required
                                 class="form-input w-full h-10 rounded-md px-3 py-2 text-sm text-white placeholder-white/30 font-['JetBrains_Mono'] transition-all duration-300"
@@ -149,6 +151,7 @@
                     <div class="p-[2px] rounded-lg transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-500/30 hover:to-transparent">
                         <textarea
                             id="message"
+                            name="message"
                             rows="5"
                             placeholder="Your message goes here. Ask me anything 👀"
                             required
@@ -157,6 +160,9 @@
                         ></textarea>
                     </div>
                 </div>
+
+                <!-- Honeypot: hidden from humans, bots fill it -->
+                <input type="text" name="website" id="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;height:0;width:0;">
 
                 <!-- Send button -->
                 <button
@@ -167,6 +173,9 @@
                 >
                     <span id="sendBtnText">Send Email →</span>
                 </button>
+
+                <!-- Submission status -->
+                <p id="formStatus" role="status" aria-live="polite" class="hidden text-sm font-['JetBrains_Mono'] text-center pt-2"></p>
             </form>
 
             <!-- Divider -->
@@ -309,27 +318,58 @@
             });
         }
 
-        // Form submit handler
-        function handleSubmit(e) {
+        // Form submit handler — posts to our own /api/contact serverless function
+        async function handleSubmit(e) {
             e.preventDefault();
-            const btn = document.getElementById('sendBtn');
-            const txt = document.getElementById('sendBtnText');
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
 
-            // Open mail client
-            const subject = encodeURIComponent(`Message from ${name} via Portfolio`);
-            const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-            window.location.href = `mailto:getahunbetsebay63@gmail.com?subject=${subject}&body=${body}`;
+            const btn    = document.getElementById('sendBtn');
+            const txt    = document.getElementById('sendBtnText');
+            const status = document.getElementById('formStatus');
+            const form   = document.getElementById('contactForm');
 
-            // Visual feedback
-            txt.textContent = '✓ Opening mail client...';
-            btn.style.boxShadow = '0px 1px 0px 0px rgb(0,255,153) inset, 0px -1px 0px 0px rgb(0,255,153) inset';
-            setTimeout(() => {
+            const payload = {
+                name:    document.getElementById('name').value.trim(),
+                email:   document.getElementById('email').value.trim(),
+                message: document.getElementById('message').value.trim(),
+                website: document.getElementById('website').value // honeypot
+            };
+
+            const showStatus = (msg, ok) => {
+                status.textContent = msg;
+                status.classList.remove('hidden', 'text-accent', 'text-red-400');
+                status.classList.add(ok ? 'text-accent' : 'text-red-400');
+            };
+
+            btn.disabled = true;
+            txt.textContent = 'Sending...';
+            status.classList.add('hidden');
+
+            try {
+                const res = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json().catch(() => ({}));
+
+                if (res.ok && data.success) {
+                    showStatus('✓ Message sent. I\'ll get back to you soon.', true);
+                    txt.textContent = '✓ Sent';
+                    form.reset();
+                    setTimeout(() => {
+                        txt.textContent = 'Send Email →';
+                        btn.disabled = false;
+                    }, 4000);
+                } else {
+                    throw new Error(data.message || 'Something went wrong');
+                }
+            } catch (err) {
+                console.error('Form submission failed:', err);
+                showStatus('✗ ' + (err.message || 'Could not send') + ' — or email me directly at getahunbetsebay63@gmail.com', false);
                 txt.textContent = 'Send Email →';
-                btn.style.boxShadow = '0px 1px 0px 0px rgb(42,42,58) inset, 0px -1px 0px 0px rgb(42,42,58) inset';
-            }, 3000);
+                btn.disabled = false;
+            }
         }
     </script>
 </body>
