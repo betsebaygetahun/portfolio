@@ -286,7 +286,7 @@
 
     <!-- FLOATING SOCIAL ICONS -->
     <div class="fixed bottom-6 right-6 z-50 flex gap-3">
-        <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=getahunbetsebay63@gmail.com" target="_blank" rel="noopener" aria-label="Email" class="w-10 h-10 rounded-full border border-accent flex items-center justify-center text-accent hover:bg-accent hover:text-primary transition-colors">
+        <a href="mailto:getahunbetsebay63@gmail.com" aria-label="Email" class="w-10 h-10 rounded-full border border-accent flex items-center justify-center text-accent hover:bg-accent hover:text-primary transition-colors">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"></path></svg>
         </a>
         <a href="https://github.com/betsebaygetahun" target="_blank" rel="noopener" aria-label="GitHub" class="w-10 h-10 rounded-full border border-accent flex items-center justify-center text-accent hover:bg-accent hover:text-primary transition-colors">
@@ -321,10 +321,10 @@
             // Open mail client
             const subject = encodeURIComponent(`Message from ${name} via Portfolio`);
             const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-            window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=getahunbetsebay63@gmail.com&su=${subject}&body=${body}`, '_blank');
+            window.location.href = `mailto:getahunbetsebay63@gmail.com?subject=${subject}&body=${body}`;
 
             // Visual feedback
-            txt.textContent = '✓ Opening Gmail...';
+            txt.textContent = '✓ Opening mail client...';
             btn.style.boxShadow = '0px 1px 0px 0px rgb(0,255,153) inset, 0px -1px 0px 0px rgb(0,255,153) inset';
             setTimeout(() => {
                 txt.textContent = 'Send Email →';
