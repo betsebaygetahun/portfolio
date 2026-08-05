@@ -1,0 +1,79 @@
+/* ── Page Transition Panels ───────────────────────────────────────── */
+/* On page load, 6 panels slide UP revealing the page beneath them   */
+@keyframes panelExit {
+    0%   { transform: translateY(0%); }
+    100% { transform: translateY(-100%); }
+}
+
+.transition-panel {
+    transform: translateY(0%);
+    animation: panelExit 0.7s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+/* Stagger each panel slightly */
+.transition-panel:nth-child(1) { animation-delay: 0.00s; }
+.transition-panel:nth-child(2) { animation-delay: 0.08s; }
+.transition-panel:nth-child(3) { animation-delay: 0.16s; }
+.transition-panel:nth-child(4) { animation-delay: 0.24s; }
+.transition-panel:nth-child(5) { animation-delay: 0.32s; }
+.transition-panel:nth-child(6) { animation-delay: 0.40s; }
+
+/* After all panels are gone, hide the overlay completely */
+#transition-overlay {
+    animation: hideOverlay 0s 1.2s forwards;
+}
+@keyframes hideOverlay {
+    to { display: none; pointer-events: none; }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  /* Prevent horizontal scroll */
+  overflow-x: hidden;
+}
+
+/* 3D Perspective Utilities for Project Cards */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.rotate-x-12 {
+  transform: rotateX(12deg);
+}
+
+/* Make sure group-hover triggers the 3D effect correctly */
+.group:hover .group-hover\:rotate-x-12 {
+  transform: translateY(-1rem) rotateX(30deg) scale(0.95);
+  box-shadow: 0 35px 60px -15px rgba(0, 255, 153, 0.4);
+}
+
+/* Optional custom scrollbar to match the dark aesthetic */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #09090b; 
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: #333; 
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00ff99; 
+}
+
+@keyframes bento-flow-y {
+  from { background-position-y: 0; }
+  to { background-position-y: 14px; }
+}
+
+@keyframes bento-flow-x {
+  from { background-position-x: 0; }
+  to { background-position-x: 14px; }
+}

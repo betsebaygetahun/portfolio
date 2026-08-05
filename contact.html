@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Betsebay Getahun</title>
+    <meta name="description" content="What led you here? What are you looking for? I would love to hear from you over a virtual coffee chat!">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0f131f',
+                        accent: {
+                            DEFAULT: '#00ff99',
+                            hover: '#00cc7a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Input glow on focus */
+        .form-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 255, 153, 0.3);
+        }
+        /* Shimmer on submit button hover */
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #06b6d4, transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .submit-btn:hover::after { opacity: 1; }
+
+        /* Copy button conic spin */
+        .copy-spin {
+            position: absolute;
+            inset: -100%;
+            animation: spin 2s linear infinite;
+            background: conic-gradient(from 90deg at 50% 50%, #E2CBFF 0%, #393BB2 50%, #E2CBFF 100%);
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-primary text-white font-sans antialiased overflow-x-hidden selection:bg-accent selection:text-black">
+
+    <!-- PAGE TRANSITION OVERLAY -->
+    <div id="transition-overlay" class="fixed inset-0 z-[9999] flex pointer-events-none">
+        <div class="transition-panel h-full flex-1 bg-accent"></div>
+        <div class="transition-panel h-full flex-1 bg-accent"></div>
+        <div class="transition-panel h-full flex-1 bg-accent"></div>
+        <div class="transition-panel h-full flex-1 bg-accent"></div>
+        <div class="transition-panel h-full flex-1 bg-accent"></div>
+        <div class="transition-panel h-full flex-1 bg-accent"></div>
+    </div>
+
+    <!-- BACKGROUND GRID -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+        <div class="absolute inset-0 bg-primary [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="py-8 xl:py-12 relative z-50">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <a href="index.html">
+                <h1 class="text-3xl font-semibold tracking-tight">Betsebay<span class="text-accent">.</span></h1>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <nav class="flex gap-8">
+                    <a class="text-white hover:text-accent font-medium transition-all" href="index.html">Professional</a>
+                    <a class="text-accent border-b-2 border-accent font-medium transition-all" href="contact.html">Contact</a>
+                </nav>
+            </div>
+            <button class="md:hidden text-accent">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="relative z-10 max-w-7xl mx-auto px-6 pb-32">
+
+        <!-- CONTACT FORM -->
+        <div class="max-w-3xl w-full mx-auto rounded-2xl p-6 md:p-10 bg-primary mt-8">
+            <h2 class="font-bold text-xl text-white/90 mb-8 font-['JetBrains_Mono']">Get in Touch</h2>
+
+            <form id="contactForm" class="space-y-4" onsubmit="handleSubmit(event)">
+                <!-- Name + Email row -->
+                <div class="flex flex-col md:flex-row gap-4">
+                    <!-- Name -->
+                    <div class="flex flex-col gap-2 w-full">
+                        <label class="text-sm font-medium text-white/90 font-['JetBrains_Mono']" for="name">Name</label>
+                        <div class="p-[2px] rounded-lg transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-500/30 hover:to-transparent">
+                            <input
+                                type="text"
+                                id="name"
+                                placeholder="Your secret identity"
+                                required
+                                class="form-input w-full h-10 rounded-md px-3 py-2 text-sm text-white placeholder-white/30 font-['JetBrains_Mono'] transition-all duration-300"
+                                style="background-color: rgb(20,20,32); box-shadow: 0px 0px 1px 1px rgb(42,42,58);"
+                            >
+                        </div>
+                    </div>
+                    <!-- Email -->
+                    <div class="flex flex-col gap-2 w-full">
+                        <label class="text-sm font-medium text-white/90 font-['JetBrains_Mono']" for="email">Email Address</label>
+                        <div class="p-[2px] rounded-lg transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-500/30 hover:to-transparent">
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="I promise I won't spam you"
+                                required
+                                class="form-input w-full h-10 rounded-md px-3 py-2 text-sm text-white placeholder-white/30 font-['JetBrains_Mono'] transition-all duration-300"
+                                style="background-color: rgb(20,20,32); box-shadow: 0px 0px 1px 1px rgb(42,42,58);"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Message -->
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-medium text-white/90 font-['JetBrains_Mono']" for="message">Content</label>
+                    <div class="p-[2px] rounded-lg transition-all duration-300 hover:bg-gradient-to-r hover:from-blue-500/30 hover:to-transparent">
+                        <textarea
+                            id="message"
+                            rows="5"
+                            placeholder="Your message goes here. Ask me anything 👀"
+                            required
+                            class="form-input w-full rounded-md px-3 py-2 text-sm text-white placeholder-white/30 font-['JetBrains_Mono'] resize-none transition-all duration-300"
+                            style="background-color: rgb(20,20,32); box-shadow: 0px 0px 1px 1px rgb(42,42,58);"
+                        ></textarea>
+                    </div>
+                </div>
+
+                <!-- Send button -->
+                <button
+                    type="submit"
+                    id="sendBtn"
+                    class="submit-btn relative w-full h-10 rounded-md text-white text-sm font-medium font-['JetBrains_Mono'] transition-all duration-300 overflow-hidden"
+                    style="background: linear-gradient(to bottom right, rgb(20,20,32), rgb(20,20,32)); box-shadow: 0px 1px 0px 0px rgb(42,42,58) inset, 0px -1px 0px 0px rgb(42,42,58) inset;"
+                >
+                    <span id="sendBtnText">Send Email →</span>
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="my-8 h-[1px] w-full" style="background: linear-gradient(to right, transparent, rgb(42,42,58), transparent);"></div>
+
+            <!-- Email copy row -->
+            <div class="flex items-center justify-between px-4 h-12 rounded-md font-['JetBrains_Mono']" style="background-color: rgb(20,20,32); box-shadow: 0px 0px 1px 1px rgb(42,42,58);">
+                <div class="flex items-center gap-3">
+                    <svg class="w-4 h-4 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                    <span class="text-white/70 text-sm">Email: <span class="text-white/90">getahunbetsebay63@gmail.com</span></span>
+                </div>
+                <!-- Copy button with spinning conic border -->
+                <button id="copyEmailBtn2" title="Copy email" class="relative w-8 h-8 rounded-md overflow-hidden p-[1px] flex-shrink-0 hover:scale-105 transition-transform" onclick="copyEmail()">
+                    <span class="copy-spin"></span>
+                    <span class="relative z-10 flex h-full w-full items-center justify-center rounded-md text-white/70 hover:text-white" style="background-color: rgb(20,20,32);">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 512 512"><rect width="336" height="336" x="128" y="128" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" rx="57" ry="57"></rect><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="m383.5 128 .5-24a56.16 56.16 0 0 0-56-56H112a64.19 64.19 0 0 0-64 64v216a56.16 56.16 0 0 0 56 56h24"></path></svg>
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <!-- INFO BENTO GRID (below form, matching radnaabazar.com) -->
+        <div class="max-w-5xl mx-auto mt-16 px-2">
+            <ul class="grid grid-cols-1 gap-4 md:grid-cols-12 md:grid-rows-3 xl:grid-rows-2 xl:max-h-[28rem]">
+
+                <!-- Card 1: Current Position -->
+                <li class="min-h-[10rem] list-none md:[grid-area:1/1/2/7] xl:[grid-area:1/1/2/5]">
+                    <div class="relative h-full rounded-3xl p-[2px] overflow-hidden group">
+                        <!-- Rainbow spinning border -->
+                        <div class="absolute inset-0 rounded-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-500" style="background: conic-gradient(from 0deg at 50% 50%, #dd7bbb, #d79f1e, #5a922c, #4c7894, #dd7bbb); animation: spin 15s linear infinite;"></div>
+                        <div class="relative h-full rounded-[22px] p-6 flex flex-col justify-between gap-4" style="background-color: rgb(9,9,11); box-shadow: 0px 0px 27px 0px #2D2D2D;">
+                            <div class="w-fit rounded-lg border border-white/10 p-2">
+                                <svg class="w-4 h-4 text-white/50" fill="currentColor" viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"></path></svg>
+                            </div>
+                            <div class="space-y-2">
+                                <h3 class="text-xl font-semibold font-['JetBrains_Mono'] text-white">Current Position</h3>
+                                <p class="text-sm text-white/50 font-['JetBrains_Mono']">Full-Stack &amp; Mobile Developer, 5th-year CE Student</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Card 2: From -->
+                <li class="min-h-[10rem] list-none md:[grid-area:1/7/2/13] xl:[grid-area:2/1/3/5]">
+                    <div class="relative h-full rounded-3xl p-[2px] overflow-hidden group">
+                        <div class="absolute inset-0 rounded-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-500" style="background: conic-gradient(from 90deg at 50% 50%, #5a922c, #4c7894, #dd7bbb, #d79f1e, #5a922c); animation: spin 12s linear infinite;"></div>
+                        <div class="relative h-full rounded-[22px] p-6 flex flex-col justify-between gap-4" style="background-color: rgb(9,9,11); box-shadow: 0px 0px 27px 0px #2D2D2D;">
+                            <div class="w-fit rounded-lg border border-white/10 p-2">
+                                <svg class="w-4 h-4 text-white/50" fill="currentColor" viewBox="0 0 512 512"><path d="M437.333 64c-2.176 0-4.396 1.369-9.176 3.207L320 108.802 192 64 71.469 104.531C67.197 105.604 64 109.864 64 115.197v322.136C64 443.729 68.271 448 74.666 448c1.828 0 6.505-2.33 9.087-3.319L192 403.197 320 448l120.531-40.531c4.271-1.073 7.469-5.334 7.469-10.667V74.666C448 68.271 443.729 64 437.333 64zM320 405.333l-128-44.802V106.666l128 44.803v253.864z"></path></svg>
+                            </div>
+                            <div class="space-y-2">
+                                <h3 class="text-xl font-semibold font-['JetBrains_Mono'] text-white">From</h3>
+                                <p class="text-sm text-white/50 font-['JetBrains_Mono']">Ethiopia, Addis Ababa</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Card 3: Language (tall, center) -->
+                <li class="min-h-[10rem] list-none md:[grid-area:2/1/3/7] xl:[grid-area:1/5/3/8]">
+                    <div class="relative h-full rounded-3xl p-[2px] overflow-hidden group">
+                        <div class="absolute inset-0 rounded-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-500" style="background: conic-gradient(from 180deg at 50% 50%, #4c7894, #dd7bbb, #d79f1e, #5a922c, #4c7894); animation: spin 12s linear infinite;"></div>
+                        <div class="relative h-full rounded-[22px] p-6 flex flex-col justify-between gap-4" style="background-color: rgb(9,9,11); box-shadow: 0px 0px 27px 0px #2D2D2D;">
+                            <div class="w-fit rounded-lg border border-white/10 p-2">
+                                <svg class="w-4 h-4 text-white/50" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 5h6.586a1 1 0 0 1 .707 1.707l-1.293 1.293"></path><path d="M8 8c0 1.5.5 3-2 5"></path><path d="M12 20l4-9 4 9"></path><path d="M19.1 18h-6.2"></path></svg>
+                            </div>
+                            <div class="space-y-2">
+                                <h3 class="text-xl font-semibold font-['JetBrains_Mono'] text-white">Language</h3>
+                                <p class="text-sm text-white/50 font-['JetBrains_Mono']">Amharic (Native) &amp; English (Professional)</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Card 4: Experience -->
+                <li class="min-h-[10rem] list-none md:[grid-area:2/7/3/13] xl:[grid-area:1/8/2/13]">
+                    <div class="relative h-full rounded-3xl p-[2px] overflow-hidden group">
+                        <div class="absolute inset-0 rounded-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-500" style="background: conic-gradient(from 270deg at 50% 50%, #d79f1e, #5a922c, #4c7894, #dd7bbb, #d79f1e); animation: spin 12s linear infinite;"></div>
+                        <div class="relative h-full rounded-[22px] p-6 flex flex-col justify-between gap-4" style="background-color: rgb(9,9,11); box-shadow: 0px 0px 27px 0px #2D2D2D;">
+                            <div class="w-fit rounded-lg border border-white/10 p-2">
+                                <svg class="w-4 h-4 text-white/50" fill="currentColor" viewBox="0 0 512 512"><path d="M256 48C141.124 48 48 141.125 48 256s93.124 208 208 208c114.875 0 208-93.125 208-208S370.875 48 256 48zm-21.549 384.999c-39.464-4.726-75.978-22.392-104.519-50.932C96.258 348.393 77.714 303.622 77.714 256c0-42.87 15.036-83.424 42.601-115.659.71 8.517 2.463 17.648 2.014 24.175-1.64 23.795-3.988 38.687 9.94 58.762 5.426 7.819 6.759 19.028 9.4 28.078 2.583 8.854 12.902 13.498 20.019 18.953 14.359 11.009 28.096 23.805 43.322 33.494 10.049 6.395 16.326 9.576 13.383 21.839-2.367 9.862-3.028 15.937-8.13 24.723-1.557 2.681 5.877 19.918 8.351 22.392 7.498 7.497 14.938 14.375 23.111 21.125 12.671 10.469-1.231 24.072-7.274 39.117z"></path></svg>
+                            </div>
+                            <div class="space-y-2">
+                                <h3 class="text-xl font-semibold font-['JetBrains_Mono'] text-white">Experience</h3>
+                                <p class="text-sm text-white/50 font-['JetBrains_Mono']">3+ years</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Card 5: Freelance (wide bottom) -->
+                <li class="min-h-[10rem] list-none md:[grid-area:3/1/4/13] xl:[grid-area:2/8/3/13]">
+                    <div class="relative h-full rounded-3xl p-[2px] overflow-hidden group">
+                        <div class="absolute inset-0 rounded-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-500" style="background: conic-gradient(from 45deg at 50% 50%, #dd7bbb, #5a922c, #d79f1e, #4c7894, #dd7bbb); animation: spin 12s linear infinite;"></div>
+                        <div class="relative h-full rounded-[22px] p-6 flex flex-col justify-between gap-4" style="background-color: rgb(9,9,11); box-shadow: 0px 0px 27px 0px #2D2D2D;">
+                            <div class="w-fit rounded-lg border border-white/10 p-2">
+                                <svg class="w-4 h-4 text-white/50" fill="currentColor" viewBox="0 0 512 512"><path d="M256 256c52.805 0 96-43.201 96-96s-43.195-96-96-96-96 43.201-96 96 43.195 96 96 96zm0 48c-63.598 0-192 32.402-192 96v48h384v-48c0-63.598-128.402-96-192-96z"></path></svg>
+                            </div>
+                            <div class="space-y-2">
+                                <h3 class="text-xl font-semibold font-['JetBrains_Mono'] text-white">Freelance</h3>
+                                <p class="text-sm text-white/50 font-['JetBrains_Mono']">Since 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- Toast notification -->
+        <div id="copyToast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-accent text-primary text-xs font-bold font-['JetBrains_Mono'] px-5 py-2.5 rounded-full opacity-0 transition-all duration-300 pointer-events-none z-50 shadow-lg">
+            ✓ Email copied to clipboard!
+        </div>
+
+    </main>
+
+
+    <!-- FLOATING SOCIAL ICONS -->
+    <div class="fixed bottom-6 right-6 z-50 hidden md:flex gap-3">
+        <a href="#" class="w-10 h-10 rounded-full border border-accent flex items-center justify-center text-accent hover:bg-accent hover:text-primary transition-colors">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12c0-5.523-4.477-10-10-10z"></path></svg>
+        </a>
+        <a href="#" class="w-10 h-10 rounded-full border border-accent flex items-center justify-center text-accent hover:bg-accent hover:text-primary transition-colors">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+        </a>
+        <a href="#" class="w-10 h-10 rounded-full border border-accent flex items-center justify-center text-accent hover:bg-accent hover:text-primary transition-colors">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path></svg>
+        </a>
+        <a href="#" class="w-10 h-10 rounded-full border border-accent flex items-center justify-center text-accent hover:bg-accent hover:text-primary transition-colors">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"></path></svg>
+        </a>
+        <a href="https://github.com/betsebaygetahun" class="w-10 h-10 rounded-full border border-accent flex items-center justify-center text-accent hover:bg-accent hover:text-primary transition-colors">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg>
+        </a>
+    </div>
+
+    <script>
+        // Copy email to clipboard
+        function copyEmail() {
+            navigator.clipboard.writeText('getahunbetsebay63@gmail.com').then(() => {
+                const toast = document.getElementById('copyToast');
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateX(-50%) translateY(-8px)';
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(-50%) translateY(0)';
+                }, 2200);
+            });
+        }
+
+        // Form submit handler
+        function handleSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('sendBtn');
+            const txt = document.getElementById('sendBtnText');
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // Open mail client
+            const subject = encodeURIComponent(`Message from ${name} via Portfolio`);
+            const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+            window.location.href = `mailto:getahunbetsebay63@gmail.com?subject=${subject}&body=${body}`;
+
+            // Visual feedback
+            txt.textContent = '✓ Opening mail client...';
+            btn.style.boxShadow = '0px 1px 0px 0px rgb(0,255,153) inset, 0px -1px 0px 0px rgb(0,255,153) inset';
+            setTimeout(() => {
+                txt.textContent = 'Send Email →';
+                btn.style.boxShadow = '0px 1px 0px 0px rgb(42,42,58) inset, 0px -1px 0px 0px rgb(42,42,58) inset';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
