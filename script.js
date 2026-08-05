@@ -53,6 +53,7 @@ const statsSection = document.getElementById('stats-section');
 if (statsSection) {
     const animateCounter = (el) => {
         const target = parseInt(el.getAttribute('data-count'), 10);
+        const suffix = el.getAttribute('data-suffix') || ''; // e.g. "+"
         const duration = 1800; // ms
         const start = performance.now();
 
@@ -61,9 +62,9 @@ if (statsSection) {
             const progress = Math.min(elapsed / duration, 1);
             // Ease-out cubic
             const eased = 1 - Math.pow(1 - progress, 3);
-            el.textContent = Math.floor(eased * target);
+            el.textContent = Math.floor(eased * target) + suffix;
             if (progress < 1) requestAnimationFrame(tick);
-            else el.textContent = target; // ensure exact final value
+            else el.textContent = target + suffix; // ensure exact final value
         };
 
         requestAnimationFrame(tick);
@@ -82,3 +83,15 @@ if (statsSection) {
     observer.observe(statsSection);
 }
 
+// ── Mobile Menu Toggle ──────────────────────────────────────────
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+
+if (mobileMenuBtn && mobileMenu) {
+    mobileMenuBtn.addEventListener('click', () => {
+        const isOpen = !mobileMenu.classList.contains('hidden');
+        mobileMenu.classList.toggle('hidden');
+        mobileMenuBtn.setAttribute('aria-expanded', String(!isOpen));
+        mobileMenuBtn.setAttribute('aria-label', isOpen ? 'Open menu' : 'Close menu');
+    });
+}
