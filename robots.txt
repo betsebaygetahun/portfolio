@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://portfolio-dun-eta-5ywtkm0k34.vercel.app/sitemap.xml
